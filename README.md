@@ -52,7 +52,7 @@ Pay attention to any errors, and then check that your changes made it to github,
 
 ### Read, Analyze, Read, Analyze, Read and Analyze
 
-Read the Readme at least 3 times, after each reading discuss what you understood with each others
+Read the Readme at least 3 times, after each reading discuss what you understood with each other
 
 ### Aim
 
@@ -64,7 +64,7 @@ You will be connecting to a real-time weather API to make a weather app that loo
 
 ### 1. Getting started: Static HTML and CSS <kbd>🔑x30</kbd>
 
-Let's start slow by creating the HTML and CSS we need to make the app look like the design: do this is App.js and App.css
+Let's start slow by creating the HTML and CSS we need to make the app look like the design: do this in App.js and App.css
 
 Don't worry about fetching data yet, you can use **invented, "hardcoded"** values for now - just focus on getting content up on the page and imitating the design provided. However, do not leave out the values! Put numbers in so that you can confirm how the layout will work with numbers present. Using the numbers that occur in the screenshot is a good idea.
 
