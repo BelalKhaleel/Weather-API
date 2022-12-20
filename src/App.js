@@ -6,73 +6,54 @@ import clear from "./img/weather-icons/clear.svg";
 import Search from "./components/Search";
 import CurrentWeather from "./components/CurrentWeather";
 import GeneralWeather from "./components/GeneralWeather";
-
+import FakeWeather from "./data/FakeWeather.json";
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Karim"
+      FakeWeather
     };
   }
 
-  handleInputChange = value => {
-    this.setState({ name: value });
-  };
-
   render() {
+    function timearray(FakeWeather){
+      let time=[];
+      for(let i=5; i<=11; i++){
+        time.push(FakeWeather.list[i].dt_txt.slice(11,16))
+      }
+      return time;
+    }
+
+    function temparray(FakeWeather){
+      let temperature=[];
+      for(let i=5; i<=11; i++){
+        temperature.push((FakeWeather.list[i].main.temp -273.15).toFixed())
+      }
+      return temperature;
+    }
+    
     return (
+      
       <div className="app">
-       {/* <header className="app__header">
-        <input type="text" placeholder="Type in a city name"/>
-       <button>FIND WEATHER</button>
-       </header> */}
         <Search />
-        <CurrentWeather />
-       <main className="app__main">
-        {/* <div className="current_weather">
-        <img src={mostlycloudy} alt="mostly cloudy icon" />
-        <figcaption>overcast clouds</figcaption>
-        <p className="temperature"><span><b>Temperature</b></span>  10&deg; to  11&deg;C</p>
-        <p className="humidity&pressure"><span><b>Humidity</b></span> 78% <span><b>Pressure</b></span> 100.48</p>
-        </div> */}
-        <GeneralWeather />
-        {/* <div className="weather_changes">
-          <article>
-            <span>03:00</span>
-            <img src={mostlycloudy} alt="mostly cloudy icon" />
-            <span>8&deg;C</span>
-          </article>
-          <article>
-            <span>06:00</span>
-            <img src={mostlycloudy} alt="mostly cloudy icon" />
-            <span>9&deg;C</span>
-          </article>
-          <article>
-            <span>09:00</span>
-            <img src={clear} alt="clear weather icon" />
-            <span>14&deg;C</span>
-          </article>
-          <article>
-            <span>12:00</span>
-            <img src={clear} alt="clear weather icon" />
-            <span>17&deg;C</span>
-          </article>
-          <article>
-            <span>15:00</span>
-            <img src={clear} alt="clear weather icon" />
-            <span>18&deg;C</span>
-          </article>
-          <article>
-            <span>18:00</span>
-            <img src={clear} alt="clear weather icon" />
-            <span>16&deg;C</span>
-          </article>
-          <article>
-            <span>21:00</span>
-            <img src={mostlycloudy} alt="mostly cloudy icon" />
-            <span>13&deg;C</span>
-          </article>
-        </div> */}
+        <CurrentWeather 
+          minTemp={((this.state.FakeWeather.list[4].main.temp_min) - 273.15).toFixed(0)}
+          maxTemp={((this.state.FakeWeather.list[4].main.temp_max) - 273.15).toFixed(0)}
+          humidity={this.state.FakeWeather.list[4].main.humidity}
+          pressure={this.state.FakeWeather.list[4].main.pressure}
+        />
+        <main className="app__main">
+        <GeneralWeather 
+        // temp3={((this.state.FakeWeather.list[5].main.temp) - 273.15).toFixed(0)}
+        // temp6={((this.state.FakeWeather.list[6].main.temp) - 273.15).toFixed(0)}
+        // temp9={((this.state.FakeWeather.list[7].main.temp) - 273.15).toFixed(0)}
+        // temp12={((this.state.FakeWeather.list[8].main.temp) - 273.15).toFixed(0)}
+        // temp15={((this.state.FakeWeather.list[9].main.temp) - 273.15).toFixed(0)}
+        // temp18={((this.state.FakeWeather.list[10].main.temp) - 273.15).toFixed(0)}
+        // temp21={((this.state.FakeWeather.list[11].main.temp) - 273.15).toFixed(0)}
+        timarray={timearray(this.state.FakeWeather)}
+        tempparray={temparray(this.state.FakeWeather)}
+        />
         </main>
       </div>
     );
