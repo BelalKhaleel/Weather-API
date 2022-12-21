@@ -17,9 +17,10 @@ import FakeWeather from "./data/FakeWeather.json";
 class App extends Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
-      FakeWeather,
-      // data: []
+      data: [],
+      isFetched: false
     };
   }
 
@@ -28,49 +29,66 @@ class App extends Component {
   // handleInputChange = (value) => {
   //   this.setState({name: value})
   // }
-  // componentDidMount(){
-  //   fetch(this.url)
+  // handleClick(e){
+  //   let ApiKey = 'fb545491965ee59f8bb567e7cba45a6a'
+  //   let link = `http://api.openweathermap.org/data/2.5/forecast?q=London&cnt=8&units=metric&appid=${this.ApiKey}`
+  //   fetch(link)
   //   .then(response=>response.json())
   //   .then(response=>{
   //     this.setState({
-  //       data: response.list
+  //       data: response.list,
+  //       isFetched: true
   //     })
   //     console.log(response.list)
   //   })
-  // };this.props.FakeWeatherNow.main.maxTemp
+  // };
+
+
+  getCityWeather(city) {
+    try {
+      fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=8&units=metric&appid=fb545491965ee59f8bb567e7cba45a6a`)
+    .then(res => {
+      return res.json()
+    })
+    .then(jsonified => {
+      console.log(jsonified)
+      if(jsonified.cod === "400" || jsonified.cod === "404") {
+        this.setState({error: jsonified.message, isLoaded: false})
+      } else {
+        this.setState({isLoaded: true, weatherObj: jsonified, error: null})
+      }
+    })
+    } catch (error) {
+      console.error(error)
+      this.setState({error: error, isLoaded: false})
+    }
+  }
+  }
 
   render() {
-    const imagechange= function(image){
-    switch(image) {
-      case "drizzle":
-      return drizzle;
-      break;
-      case "clear":
-      return clear;
-      break;
-      case "cloudy":
-      return cloudy;
-      break;
-      case "fog":
-      return fog;
-      break;
-      case "mostlycloudy":
-      return mostlycloudy;
-      break;
-      case "partlycloudy":
-      return partlycloudy;
-      break;
-      case "rain":
-      return rain;
-      break;
-      case "snow":
-      return snow;
-      break;
-      case "storm":
-      return storm;
-      break;
-    }
-    }
+    const imagechange = (id) => {
+      switch (true) {
+        case (id < 300):
+          return storm;
+        case (300 <= id && id < 500):
+          return drizzle;
+        case (500 <= id && id < 600):
+          return rain;
+        case (600 <= id && id < 700):
+          return snow;
+        case (700 <= id && id < 800):
+          return fog;
+        case (id == 800):
+          return clear;
+        case (id == 801):
+          return partlycloudy;
+        case (801 < id && id <= 805):
+          return mostlycloudy;
+        default:
+          return  
+      }
+    };
+  }
 
     function timearray(FakeWeather){
       let time=[];
@@ -106,5 +124,5 @@ class App extends Component {
     );
   }
 }
-
+}
 export default App;
