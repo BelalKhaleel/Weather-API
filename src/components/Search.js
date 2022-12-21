@@ -9,7 +9,7 @@ class Search extends React.Component {
     return (
       <header className="app__header">
         <input type="text" placeholder="Type in a city name"/>
-       <button>FIND WEATHER</button>
+       <button type="button">FIND WEATHER</button>
        </header>
     );
   }

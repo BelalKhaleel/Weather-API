@@ -1,21 +1,77 @@
 import React, { Component } from "react";
-import fakeWeatherData from "./fakeWeatherData.json";
 import "./App.css";
 import mostlycloudy from "./img/weather-icons/mostlycloudy.svg";
 import clear from "./img/weather-icons/clear.svg";
+import cloudy from "./img/weather-icons/cloudy.svg";
+import drizzle from "./img/weather-icons/drizzle.svg";
+import fog from "./img/weather-icons/fog.svg";
+import partlycloudy from "./img/weather-icons/partlycloudy.svg";
+import snow from "./img/weather-icons/snow.svg";
+import storm from "./img/weather-icons/storm.svg";
+import rain from "./img/weather-icons/rain.svg";
 import Search from "./components/Search";
 import CurrentWeather from "./components/CurrentWeather";
 import GeneralWeather from "./components/GeneralWeather";
 import FakeWeather from "./data/FakeWeather.json";
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      FakeWeather
+      FakeWeather,
+      // data: []
     };
   }
 
+  // ApiKey = 'fb545491965ee59f8bb567e7cba45a6a'
+  // url = `http://api.openweathermap.org/data/2.5/forecast?q=London&cnt=8&units=metric&appid=${this.ApiKey}`
+  // handleInputChange = (value) => {
+  //   this.setState({name: value})
+  // }
+  // componentDidMount(){
+  //   fetch(this.url)
+  //   .then(response=>response.json())
+  //   .then(response=>{
+  //     this.setState({
+  //       data: response.list
+  //     })
+  //     console.log(response.list)
+  //   })
+  // };this.props.FakeWeatherNow.main.maxTemp
+
   render() {
+    const imagechange= function(image){
+    switch(image) {
+      case "drizzle":
+      return drizzle;
+      break;
+      case "clear":
+      return clear;
+      break;
+      case "cloudy":
+      return cloudy;
+      break;
+      case "fog":
+      return fog;
+      break;
+      case "mostlycloudy":
+      return mostlycloudy;
+      break;
+      case "partlycloudy":
+      return partlycloudy;
+      break;
+      case "rain":
+      return rain;
+      break;
+      case "snow":
+      return snow;
+      break;
+      case "storm":
+      return storm;
+      break;
+    }
+    }
+
     function timearray(FakeWeather){
       let time=[];
       for(let i=5; i<=11; i++){
@@ -37,22 +93,13 @@ class App extends Component {
       <div className="app">
         <Search />
         <CurrentWeather 
-          minTemp={((this.state.FakeWeather.list[4].main.temp_min) - 273.15).toFixed(0)}
-          maxTemp={((this.state.FakeWeather.list[4].main.temp_max) - 273.15).toFixed(0)}
-          humidity={this.state.FakeWeather.list[4].main.humidity}
-          pressure={this.state.FakeWeather.list[4].main.pressure}
+          FakeWeatherNow={FakeWeather.list[0]} imagechange={imagechange}
         />
         <main className="app__main">
         <GeneralWeather 
-        // temp3={((this.state.FakeWeather.list[5].main.temp) - 273.15).toFixed(0)}
-        // temp6={((this.state.FakeWeather.list[6].main.temp) - 273.15).toFixed(0)}
-        // temp9={((this.state.FakeWeather.list[7].main.temp) - 273.15).toFixed(0)}
-        // temp12={((this.state.FakeWeather.list[8].main.temp) - 273.15).toFixed(0)}
-        // temp15={((this.state.FakeWeather.list[9].main.temp) - 273.15).toFixed(0)}
-        // temp18={((this.state.FakeWeather.list[10].main.temp) - 273.15).toFixed(0)}
-        // temp21={((this.state.FakeWeather.list[11].main.temp) - 273.15).toFixed(0)}
         timarray={timearray(this.state.FakeWeather)}
         tempparray={temparray(this.state.FakeWeather)}
+        FakeWeather={FakeWeather} imagechange={imagechange}
         />
         </main>
       </div>
